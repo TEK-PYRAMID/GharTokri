@@ -2,6 +2,7 @@
 // Page: Home
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Banner from "../../components/home/Banner";
 import PromoStrip from "../../components/home/PromoStrip";
 import CategoryCard from "../../components/home/CategoryCard";
@@ -67,6 +68,12 @@ const Home = () => {
           <h2 className="text-lg font-semibold text-gray-900">
             Shop by Category
           </h2>
+          <Link
+            to="/categories"
+            className="text-xs font-semibold text-yellow-600 hover:text-yellow-700 transition"
+          >
+            View All →
+          </Link>
         </div>
 
         {homeCategories.length === 0 ? (
