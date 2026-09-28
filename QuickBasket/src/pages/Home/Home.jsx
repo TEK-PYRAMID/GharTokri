@@ -10,18 +10,7 @@ import ProductCard from "../../components/home/ProductCard";
 import Loader from "../../components/common/Loader";
 import ErrorState from "../../components/common/ErrorState";
 import EmptyState from "../../components/common/EmptyState";
-import { categories } from "../../data/categories";
-import { featuredProducts } from "../../data/featuredProducts";
-
-// TODO: once productService.js (Poorvika) exposes real endpoints,
-// replace the local data below with productService.getCategories() /
-// productService.getFeatured(), inside the same async block.
-const fetchHomeData = () =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ categories, products: featuredProducts });
-    }, 400);
-  });
+import productService from "../../services/productService";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -33,10 +22,13 @@ const Home = () => {
     setLoading(true);
     setError(false);
 
-    fetchHomeData()
-      .then((data) => {
-        setHomeCategories(data.categories);
-        setProducts(data.products);
+    Promise.all([
+      productService.getCategories(),
+      productService.getFeatured(),
+    ])
+      .then(([categoriesData, productsData]) => {
+        setHomeCategories(categoriesData || []);
+        setProducts(productsData || []);
       })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
