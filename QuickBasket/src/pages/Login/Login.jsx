@@ -164,9 +164,7 @@ function Login() {
                       : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
                   }`}
               />
-{/* 
-             
-            </div> */}
+
           {formik.touched.password && formik.errors.password && (
   <p className="text-red-500 text-sm mt-1">
     {formik.errors.password}
