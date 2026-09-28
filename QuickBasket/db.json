@@ -1673,5 +1673,19 @@
       "price": 120
     }
   ],
-  "$schema": "./node_modules/json-server/schema.json"
+  "$schema": "./node_modules/json-server/schema.json",
+
+  "checkout": [
+    {
+      "id": "chk-1",
+      "name": " Prashanth",
+      "address": "123 Main Street, MG Road",
+      "phone": "9876543210",
+      "pincode": "560001",
+      "state": "Karnataka"
+    }
+    
+  ]
 }
+
+
