@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -30,6 +29,7 @@ function Login() {
           `http://localhost:3000/users?email=${values.email}`
         );
 
+        // Check if email exists
         if (response.data.length === 0) {
           alert("Email is not registered");
           return;
@@ -37,16 +37,20 @@ function Login() {
 
         const user = response.data[0];
 
+        // Check password
         if (user.password !== values.password) {
           alert("Incorrect password");
           return;
         }
 
+        // Login successful
         alert("Login successful!");
 
-        // Navigate to home page after login
-        navigate("/");
+        // Clear email and password fields
+        formik.resetForm();
 
+        // Navigate to home page
+        navigate("/");
       } catch (error) {
         console.log(error);
         alert("Login failed");
@@ -56,7 +60,6 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-[#f7f7f7] flex items-center justify-center px-4">
-
       <div className="w-full max-w-md">
 
         {/* Logo */}
@@ -82,7 +85,7 @@ function Login() {
           </div>
         </div>
 
-        {/* Card */}
+        {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-lg p-7">
 
           <h2 className="text-2xl font-bold text-gray-900 text-center">
@@ -93,7 +96,10 @@ function Login() {
             Login to continue shopping
           </p>
 
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={formik.handleSubmit}
+            autoComplete="off"
+          >
 
             {/* Email */}
             <div className="mb-4">
@@ -110,15 +116,15 @@ function Login() {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
+                autoComplete="off"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.email && formik.errors.email
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
               {formik.touched.email && formik.errors.email && (
@@ -144,15 +150,15 @@ function Login() {
                 type="password"
                 name="password"
                 placeholder="Enter your password"
+                autoComplete="new-password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.password && formik.errors.password
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
               {formik.touched.password && formik.errors.password && (
@@ -197,5 +203,3 @@ function Login() {
 }
 
 export default Login;
-
-

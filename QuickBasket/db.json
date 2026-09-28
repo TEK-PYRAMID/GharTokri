@@ -23,6 +23,12 @@
       "email": "mubina.hvr@gmail.com",
       "password": "12345678",
       "id": "QCj_8SHfr60"
+    },
+    {
+      "name": "Aishwarya Honawad",
+      "email": "aishwaryahonawad7@gmail.com",
+      "password": "123456",
+      "id": "4p_RgKLtCcw"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
