@@ -51,19 +51,24 @@ const Navbar = () => {
 
           <Link
             to="/cart"
-            className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-500"
+            className="rounded-lg px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-500"
           >
             🛒 Cart
           </Link>
 
-          {!user && (
-            <Link
-              to="/login"
-              className="flex items-center gap-2 rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-400"
-            >
-              👤 Login
-            </Link>
-          )}
+          <Link
+            to="/login"
+            className="flex items-center gap-2 rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-400"
+          >
+            Login
+          </Link>
+
+          <Link
+            to="/login"
+            className="flex items-center gap-2 rounded-full border border-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-400"
+          >
+            👤 Profile
+          </Link>
         </div>
 
         <button

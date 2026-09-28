@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { Link } from "react-router-dom";
 function Signup() {
   const formik = useFormik({
@@ -27,16 +26,27 @@ function Signup() {
 
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/users?email=${values.email}`
+        const response = await fetch(
+          `http://localhost:3000/users?email=${encodeURIComponent(values.email)}`
         );
+        const existingUsers = await response.json();
 
-        if (response.data.length > 0) {
+        if (existingUsers && existingUsers.length > 0) {
           alert("Email already registered");
           return;
         }
 
-        await axios.post("http://localhost:3000/users", values);
+        const createResponse = await fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!createResponse.ok) {
+          throw new Error("Signup failed");
+        }
 
         alert("Signup successful!");
 
