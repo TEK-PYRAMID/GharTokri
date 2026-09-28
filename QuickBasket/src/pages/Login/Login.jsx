@@ -2,7 +2,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
@@ -26,16 +25,17 @@ function Login() {
 
     onSubmit: async (values) => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/users?email=${values.email}`
+        const response = await fetch(
+          `http://localhost:3000/users?email=${encodeURIComponent(values.email)}`
         );
+        const users = await response.json();
 
-        if (response.data.length === 0) {
+        if (!users || users.length === 0) {
           alert("Email is not registered");
           return;
         }
 
-        const user = response.data[0];
+        const user = users[0];
 
         if (user.password !== values.password) {
           alert("Incorrect password");

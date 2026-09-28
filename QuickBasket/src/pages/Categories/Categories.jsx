@@ -8,48 +8,39 @@ import ProductCard from "../../components/home/ProductCard";
 import Loader from "../../components/common/Loader";
 import ErrorState from "../../components/common/ErrorState";
 import EmptyState from "../../components/common/EmptyState";
-import { categories } from "../../data/categories";
-import { featuredProducts } from "../../data/featuredProducts";
-
-// TODO: replace with productService.getCategories() & productService.getProducts() once the backend is wired in.
-const fetchCategoriesAndProducts = () =>
-  new Promise((resolve) => {
-    setTimeout(
-      () =>
-        resolve({
-          categories,
-          products: featuredProducts,
-        }),
-      300
-    );
-  });
+import productService from "../../services/productService";
 
 const Categories = () => {
   const { category: categorySlug } = useParams();
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [error, setError] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("default");
 
-  const loadData = () => {
-    setLoading(true);
+  // Initial load: fetch all categories from db
+  const loadCategories = () => {
+    setLoadingCategories(true);
     setError(false);
 
-    fetchCategoriesAndProducts()
+    productService
+      .getCategories()
       .then((data) => {
-        setAllCategories(data.categories);
-        setAllProducts(data.products);
+        setAllCategories(data || []);
       })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.error("Error loading categories from db:", err);
+        setError(true);
+      })
+      .finally(() => setLoadingCategories(false));
   };
 
   useEffect(() => {
-    loadData();
+    loadCategories();
   }, []);
 
   // Determine active category object from route parameter
@@ -57,33 +48,55 @@ const Categories = () => {
     if (!categorySlug || categorySlug === "all") return null;
     return allCategories.find(
       (c) =>
-        c.slug.toLowerCase() === categorySlug.toLowerCase() ||
-        c.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === categorySlug.toLowerCase()
+        c.slug?.toLowerCase() === categorySlug.toLowerCase() ||
+        c.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-") === categorySlug.toLowerCase()
     );
   }, [categorySlug, allCategories]);
 
-  // Filter products by category
-  const categoryProducts = useMemo(() => {
-    if (!activeCategory) {
-      if (categorySlug && categorySlug !== "all") {
-        // Fallback matching if slug format differs
-        const matched = allProducts.filter(
-          (p) =>
-            p.category.toLowerCase().replace(/[^a-z0-9]+/g, "-") === categorySlug.toLowerCase() ||
-            p.category.toLowerCase().includes(categorySlug.toLowerCase())
-        );
-        if (matched.length > 0) return matched;
+  // Fetch products from db whenever activeCategory / categorySlug changes (on tapping category)
+  useEffect(() => {
+    if (loadingCategories) return;
+
+    let isMounted = true;
+    setLoadingProducts(true);
+
+    let categoryNameToFetch = null;
+    if (activeCategory) {
+      categoryNameToFetch = activeCategory.name;
+    } else if (categorySlug && categorySlug !== "all") {
+      const matched = allCategories.find(
+        (c) =>
+          c.slug?.toLowerCase() === categorySlug.toLowerCase() ||
+          c.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-") === categorySlug.toLowerCase()
+      );
+      if (matched) {
+        categoryNameToFetch = matched.name;
       }
-      return allProducts;
     }
-    return allProducts.filter(
-      (p) => p.category.toLowerCase() === activeCategory.name.toLowerCase()
-    );
-  }, [activeCategory, categorySlug, allProducts]);
+
+    productService
+      .getProducts(categoryNameToFetch)
+      .then((data) => {
+        if (isMounted) {
+          setProducts(data || []);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching products from db:", err);
+        if (isMounted) setError(true);
+      })
+      .finally(() => {
+        if (isMounted) setLoadingProducts(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [categorySlug, activeCategory, loadingCategories, allCategories]);
 
   // Filter and sort products
   const displayProducts = useMemo(() => {
-    let result = [...categoryProducts];
+    let result = [...products];
 
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase().trim();
@@ -103,17 +116,17 @@ const Categories = () => {
     }
 
     return result;
-  }, [categoryProducts, searchTerm, sortBy]);
+  }, [products, searchTerm, sortBy]);
 
-  if (loading) {
+  if (loadingCategories) {
     return <Loader message="Loading categories & products..." />;
   }
 
-  if (error) {
+  if (error && allCategories.length === 0) {
     return (
       <ErrorState
         message="We couldn't load categories right now."
-        onRetry={loadData}
+        onRetry={loadCategories}
       />
     );
   }
@@ -162,7 +175,7 @@ const Categories = () => {
             </p>
           </div>
           <span className="self-start rounded-full bg-yellow-400/30 px-3.5 py-1 text-xs font-semibold text-gray-800 border border-yellow-300/60">
-            ⚡ {categoryProducts.length} items
+            ⚡ {products.length} items
           </span>
         </div>
 
@@ -257,7 +270,14 @@ const Categories = () => {
           </div>
         </div>
 
-        {displayProducts.length === 0 ? (
+        {loadingProducts ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-yellow-400 border-t-transparent"></div>
+            <p className="mt-3 text-xs font-medium text-gray-500">
+              Fetching products from database...
+            </p>
+          </div>
+        ) : displayProducts.length === 0 ? (
           <EmptyState
             title="No products found"
             message={
