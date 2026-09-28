@@ -4,9 +4,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -41,6 +43,14 @@ function Login() {
           alert("Incorrect password");
           return;
         }
+
+        setUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          profileImage:
+            user.profileImage || user.image || user.avatar || user.photoURL || "",
+        });
 
         alert("Login successful!");
 

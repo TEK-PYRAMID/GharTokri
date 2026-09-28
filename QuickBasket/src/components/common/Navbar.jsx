@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
+  const { user } = useAuth();
+
   return (
     <nav className="bg-white shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -37,6 +40,15 @@ const Navbar = () => {
             Products
           </Link>
 
+          {user && (
+            <Link
+              to="/profile"
+              className="font-medium text-gray-700 transition hover:text-yellow-500"
+            >
+              Profile
+            </Link>
+          )}
+
           <Link
             to="/cart"
             className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-500"
@@ -44,12 +56,14 @@ const Navbar = () => {
             🛒 Cart
           </Link>
 
-          <Link
-            to="/login"
-            className="flex items-center gap-2 rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-400"
-          >
-            👤 Login
-          </Link>
+          {!user && (
+            <Link
+              to="/login"
+              className="flex items-center gap-2 rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-400"
+            >
+              👤 Login
+            </Link>
+          )}
         </div>
 
         <button
