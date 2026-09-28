@@ -9,117 +9,6 @@ import ProductCard from "../../components/home/ProductCard.jsx";
 import Loader from "../../components/common/Loader.jsx";
 import ErrorState from "../../components/common/ErrorState.jsx";
 
-const getBasePrice = (item) => {
-  if (item?.price) return Number(item.price);
-  const num = parseInt(String(item?.id || "").replace(/\D/g, "") || "1", 10);
-  const basePrices = [49, 65, 89, 35, 120, 150, 75, 99, 110, 180, 45, 135, 70, 95, 160, 210];
-  return basePrices[num % basePrices.length];
-};
-
-const getUnitOptions = (category, basePrice) => {
-  const isWeightCategory =
-    category === "Fruits & Vegetables" ||
-    category === "Dairy & Eggs";
-
-  if (isWeightCategory) {
-    return [
-      {
-        id: "opt-1",
-        label: "500 g",
-        unitText: "Standard Pack",
-        priceMultiplier: 1,
-        price: basePrice,
-        mrp: Math.round(basePrice * 1.3),
-        savingsPercent: 23,
-      },
-      {
-        id: "opt-2",
-        label: "1 kg",
-        unitText: "Value Combo",
-        priceMultiplier: 1.9,
-        price: Math.round(basePrice * 1.9),
-        mrp: Math.round(basePrice * 1.9 * 1.35),
-        savingsPercent: 26,
-      },
-      {
-        id: "opt-3",
-        label: "2 kg",
-        unitText: "Super Saver Family Pack",
-        priceMultiplier: 3.6,
-        price: Math.round(basePrice * 3.6),
-        mrp: Math.round(basePrice * 3.6 * 1.4),
-        savingsPercent: 29,
-      },
-    ];
-  }
-
-  return [
-    {
-      id: "opt-1",
-      label: "Single Pack",
-      unitText: "1 Unit",
-      priceMultiplier: 1,
-      price: basePrice,
-      mrp: Math.round(basePrice * 1.25),
-      savingsPercent: 20,
-    },
-    {
-      id: "opt-2",
-      label: "Pack of 2",
-      unitText: "Combo Pack",
-      priceMultiplier: 1.9,
-      price: Math.round(basePrice * 1.9),
-      mrp: Math.round(basePrice * 1.9 * 1.3),
-      savingsPercent: 23,
-    },
-    {
-      id: "opt-3",
-      label: "Family Pack (3 Units)",
-      unitText: "Mega Saver",
-      priceMultiplier: 2.7,
-      price: Math.round(basePrice * 2.7),
-      mrp: Math.round(basePrice * 2.7 * 1.35),
-      savingsPercent: 26,
-    },
-  ];
-};
-
-const INITIAL_REVIEWS = [
-  {
-    id: "rev-1",
-    author: "Ananya Sharma",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80",
-    rating: 5,
-    date: "2 days ago",
-    verified: true,
-    comment:
-      "Delivered in just 9 minutes in top condition! Crisp, fresh, and properly sanitized. Way better than picking up from local mandis.",
-    likes: 14,
-  },
-  {
-    id: "rev-2",
-    author: "Rahul Verma",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80",
-    rating: 5,
-    date: "1 week ago",
-    verified: true,
-    comment:
-      "Exceptional freshness and sweet aroma. The packaging preserved the temperature completely. Highly recommended for daily grocery essentials!",
-    likes: 8,
-  },
-  {
-    id: "rev-3",
-    author: "Pooja Hegde",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80",
-    rating: 4,
-    date: "2 weeks ago",
-    verified: true,
-    comment:
-      "Good quality overall. Clean and neatly sorted. Will definitely buy regularly.",
-    likes: 5,
-  },
-];
-
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -131,7 +20,7 @@ const ProductDetails = () => {
   const [selectedUnitIndex, setSelectedUnitIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
-  const [reviews, setReviews] = useState(INITIAL_REVIEWS);
+  const [reviews, setReviews] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [addedToast, setAddedToast] = useState(false);
 
@@ -140,6 +29,7 @@ const ProductDetails = () => {
   const [newReviewAuthor, setNewReviewAuthor] = useState("");
   const [newReviewRating, setNewReviewRating] = useState(5);
   const [newReviewComment, setNewReviewComment] = useState("");
+  const [submittingReview, setSubmittingReview] = useState(false);
 
   // Fetch product data from database
   const loadProduct = () => {
@@ -153,7 +43,9 @@ const ProductDetails = () => {
           setError(true);
         } else {
           setProduct(data);
-          // Fetch related products from same category
+          setReviews(data.reviews || []);
+
+          // Fetch related products from same category from db
           if (data.category) {
             productService
               .getProducts(data.category)
@@ -166,7 +58,7 @@ const ProductDetails = () => {
         }
       })
       .catch((err) => {
-        console.error("Error loading product:", err);
+        console.error("Error loading product from database:", err);
         setError(true);
       })
       .finally(() => {
@@ -181,11 +73,23 @@ const ProductDetails = () => {
     setQuantity(1);
   }, [id]);
 
-  const basePrice = useMemo(() => getBasePrice(product), [product]);
-  const unitOptions = useMemo(
-    () => getUnitOptions(product?.category, basePrice),
-    [product?.category, basePrice]
-  );
+  // Unit options directly from database product object
+  const unitOptions = useMemo(() => {
+    if (product?.unitOptions && product.unitOptions.length > 0) {
+      return product.unitOptions;
+    }
+    return [
+      {
+        id: "opt-1",
+        label: "Standard Pack",
+        unitText: "1 Unit",
+        price: product?.price || 65,
+        mrp: product?.mrp || Math.round((product?.price || 65) * 1.3),
+        savingsPercent: product?.savingsPercent || 23,
+      },
+    ];
+  }, [product]);
+
   const currentUnit = unitOptions[selectedUnitIndex] || unitOptions[0];
 
   // Check if item is already in cart
@@ -244,9 +148,11 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddReview = (e) => {
+  const handleAddReview = async (e) => {
     e.preventDefault();
     if (!newReviewAuthor.trim() || !newReviewComment.trim()) return;
+
+    setSubmittingReview(true);
 
     const newRev = {
       id: "rev-" + Date.now(),
@@ -259,10 +165,15 @@ const ProductDetails = () => {
       likes: 0,
     };
 
-    setReviews([newRev, ...reviews]);
+    const updated = [newRev, ...reviews];
+    setReviews(updated);
     setNewReviewAuthor("");
     setNewReviewComment("");
     setShowReviewModal(false);
+
+    // Persist new review to db.json via API
+    await productService.addProductReview(product.id, newRev, reviews);
+    setSubmittingReview(false);
   };
 
   if (loading) {
@@ -340,12 +251,12 @@ const ProductDetails = () => {
               {/* Delivery time badge (Blinkit hallmark) */}
               <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 rounded-full bg-emerald-600 px-3 py-1 text-[11px] font-bold text-white shadow-md">
                 <span>⚡</span>
-                <span>10 MINS</span>
+                <span>{product.deliveryTime || "10 MINS"}</span>
               </div>
 
               {/* Discount badge */}
               <div className="absolute top-4 right-4 z-10 rounded-full bg-amber-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-sm">
-                {currentUnit.savingsPercent}% OFF
+                {currentUnit.savingsPercent || product.savingsPercent || 20}% OFF
               </div>
 
               {/* Product Image */}
@@ -407,10 +318,10 @@ const ProductDetails = () => {
               <div className="mt-2.5 flex items-center gap-3">
                 <div className="flex items-center gap-1 rounded-lg bg-emerald-600 px-2 py-0.5 text-xs font-bold text-white shadow-xs">
                   <span>★</span>
-                  <span>4.8</span>
+                  <span>{product.rating || 4.8}</span>
                 </div>
                 <span className="text-xs text-gray-500">
-                  ({reviews.length * 42} ratings & {reviews.length} reviews)
+                  ({product.ratingCount || (reviews.length * 42)} ratings & {reviews.length} reviews)
                 </span>
                 <span className="text-xs font-medium text-emerald-700">
                   • In Stock
@@ -604,25 +515,21 @@ const ProductDetails = () => {
           {activeTab === "description" && (
             <div className="pt-6 text-sm text-gray-700 leading-relaxed">
               <p>
-                {product.name} is carefully sourced to ensure premier culinary grade, vibrant appearance, and wholesome nutritional value. Ideal for your daily household needs, whether you are crafting healthy breakfast recipes, fresh salads, or nutritious family meals.
+                {product.description || `${product.name} is carefully sourced to ensure premier culinary grade, vibrant appearance, and wholesome nutritional value.`}
               </p>
 
               <h4 className="mt-5 text-xs font-bold uppercase tracking-wider text-gray-900">
                 Key Features & Benefits
               </h4>
               <ul className="mt-2.5 list-disc space-y-1.5 pl-5 text-xs text-gray-600">
-                <li>
-                  <strong>Grade-A Farm Quality:</strong> Sourced directly from certified partners under strict hygiene standards.
-                </li>
-                <li>
-                  <strong>Nutrient Dense:</strong> Retains high dietary fiber, natural vitamins, and essential minerals.
-                </li>
-                <li>
-                  <strong>Cold-Chain Protected:</strong> Kept at optimal temperatures from procurement to doorstep drop-off.
-                </li>
-                <li>
-                  <strong>Storage Instructions:</strong> Store in a cool, ventilated compartment or refrigerate to maximize freshness up to 5 days.
-                </li>
+                {(product.keyFeatures && product.keyFeatures.length > 0 ? product.keyFeatures : [
+                  "Grade-A Farm Quality: Sourced directly from certified partners under strict hygiene standards.",
+                  "Nutrient Dense: Retains natural vitamins, fiber, and essential minerals.",
+                  "Cold-Chain Protected: Kept at optimal temperatures to preserve freshness.",
+                  "Storage Instructions: Store in a cool, ventilated compartment or refrigerate."
+                ]).map((feat, idx) => (
+                  <li key={idx}>{feat}</li>
+                ))}
               </ul>
             </div>
           )}
@@ -643,19 +550,27 @@ const ProductDetails = () => {
                     </tr>
                     <tr className="border-b border-gray-100 bg-gray-50/50">
                       <td className="px-4 py-3 font-semibold text-gray-600">Packaging Type</td>
-                      <td className="px-4 py-3 font-medium text-gray-900">Food-Grade Sealed Pouch / Tray</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">
+                        {product.specifications?.packagingType || "Food-Grade Sealed Pouch / Tray"}
+                      </td>
                     </tr>
                     <tr className="border-b border-gray-100">
                       <td className="px-4 py-3 font-semibold text-gray-600">Shelf Life</td>
-                      <td className="px-4 py-3 font-medium text-gray-900">4–6 Days from delivery date</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">
+                        {product.specifications?.shelfLife || "4–6 Days from delivery date"}
+                      </td>
                     </tr>
                     <tr className="border-b border-gray-100 bg-gray-50/50">
                       <td className="px-4 py-3 font-semibold text-gray-600">Country of Origin</td>
-                      <td className="px-4 py-3 font-medium text-gray-900">India</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">
+                        {product.specifications?.countryOfOrigin || "India"}
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3 font-semibold text-gray-600">FSSAI Certified</td>
-                      <td className="px-4 py-3 font-medium text-gray-900">Lic. No. 10020042001923</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">
+                        {product.specifications?.fssaiLicense || "Lic. No. 10020042001923"}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

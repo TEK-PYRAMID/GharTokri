@@ -73,6 +73,25 @@ const apiClient = {
     return { data };
   },
 
+  patch: async (endpoint, body, options = {}) => {
+    const url = `${BASE_URL}${endpoint}`;
+    const res = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return { data };
+  },
+
   delete: async (endpoint, options = {}) => {
     const url = `${BASE_URL}${endpoint}`;
     const res = await fetch(url, {
