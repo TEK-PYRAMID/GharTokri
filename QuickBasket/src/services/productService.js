@@ -54,6 +54,20 @@ const productService = {
       return fallbackProducts.find((p) => String(p.id) === String(id));
     }
   },
+
+  // Add review to a product in db.json
+  addProductReview: async (id, newReview, existingReviews = []) => {
+    try {
+      const updatedReviews = [newReview, ...existingReviews];
+      const response = await apiClient.patch(`/products/${id}`, {
+        reviews: updatedReviews,
+      });
+      return response.data;
+    } catch (err) {
+      console.warn('API error saving review to db:', err.message);
+      return null;
+    }
+  },
 };
 
 export default productService;
