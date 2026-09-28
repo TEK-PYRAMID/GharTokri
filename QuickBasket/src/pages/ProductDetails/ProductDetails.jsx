@@ -1,4 +1,4 @@
-// Owner: Poorvika
+// Owner: Sayeed
 // Page: ProductDetails (Blinkit-style)
 
 import { useEffect, useState, useMemo } from "react";
