@@ -46,7 +46,7 @@ const ProductCard = ({ product }) => {
     }
 
     // Navigate to cart page as requested
-    navigate("/cart");
+    navigate("/cart",);
   };
 
   return (

@@ -1,16 +1,48 @@
-// Owner: Mubeena (Supporting: Poorvika)
-// Handles cart state, add/remove items, quantity, totals
-import React from "react";
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const value = { cartItems, setCartItems };
+  const addToCart = (product, quantity = 1) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (item) => item.id === product.id
+      );
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: item.quantity + quantity,
+              }
+            : item
+        );
+      }
+
+      return [
+        ...prevItems,
+        {
+          ...product,
+          quantity,
+        },
+      ];
+    });
+  };
+
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems,
+        addToCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export const useCart = () => useContext(CartContext);
