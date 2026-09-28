@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
+  const { user } = useAuth();
+
   return (
     <nav className="bg-white shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
@@ -36,6 +39,15 @@ const Navbar = () => {
           >
             Products
           </Link>
+
+          {user && (
+            <Link
+              to="/profile"
+              className="font-medium text-gray-700 transition hover:text-yellow-500"
+            >
+              Profile
+            </Link>
+          )}
 
           <Link
             to="/cart"
