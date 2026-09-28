@@ -1,13 +1,17 @@
+
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 function Signup() {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
-      password: ""
+      password: "",
     },
 
     validationSchema: Yup.object({
@@ -21,14 +25,18 @@ function Signup() {
 
       password: Yup.string()
         .min(6, "Password must be at least 6 characters")
-        .required("Password is required")
+        .required("Password is required"),
     }),
 
     onSubmit: async (values, { resetForm }) => {
       try {
+        // Check if email already exists
         const response = await fetch(
-          `http://localhost:3000/users?email=${encodeURIComponent(values.email)}`
+          `http://localhost:3000/users?email=${encodeURIComponent(
+            values.email
+          )}`
         );
+
         const existingUsers = await response.json();
 
         if (existingUsers && existingUsers.length > 0) {
@@ -36,26 +44,38 @@ function Signup() {
           return;
         }
 
-        const createResponse = await fetch("http://localhost:3000/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
+        // Create user
+        const createResponse = await fetch(
+          "http://localhost:3000/users",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        );
 
         if (!createResponse.ok) {
           throw new Error("Signup failed");
         }
 
-        alert("Signup successful!");
+        // Signup successful
+        alert("Signup successful! OTP has been sent.");
+
+        // Go to OTP verification page
+        navigate("/otp-verification", {
+          state: {
+            email: values.email,
+          },
+        });
 
         resetForm();
       } catch (error) {
         console.log(error);
         alert("Signup failed");
       }
-    }
+    },
   });
 
   return (
@@ -66,7 +86,7 @@ function Signup() {
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <div className="flex items-center gap-2">
-            
+
             <div className="w-12 h-12 rounded-xl bg-[#f8c600] flex items-center justify-center shadow-md">
               <span className="text-2xl font-black text-[#111111]">
                 QB
@@ -101,6 +121,7 @@ function Signup() {
 
             {/* Name */}
             <div className="mb-4">
+
               <label
                 htmlFor="name"
                 className="block text-sm font-semibold text-gray-700 mb-2"
@@ -116,12 +137,11 @@ function Signup() {
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.name && formik.errors.name
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.name && formik.errors.name
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
               {formik.touched.name && formik.errors.name && (
@@ -129,10 +149,12 @@ function Signup() {
                   {formik.errors.name}
                 </p>
               )}
+
             </div>
 
             {/* Email */}
             <div className="mb-4">
+
               <label
                 htmlFor="email"
                 className="block text-sm font-semibold text-gray-700 mb-2"
@@ -148,12 +170,11 @@ function Signup() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.email && formik.errors.email
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
               {formik.touched.email && formik.errors.email && (
@@ -161,10 +182,12 @@ function Signup() {
                   {formik.errors.email}
                 </p>
               )}
+
             </div>
 
             {/* Password */}
             <div className="mb-6">
+
               <label
                 htmlFor="password"
                 className="block text-sm font-semibold text-gray-700 mb-2"
@@ -180,12 +203,11 @@ function Signup() {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.password && formik.errors.password
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
               {formik.touched.password && formik.errors.password && (
@@ -193,6 +215,7 @@ function Signup() {
                   {formik.errors.password}
                 </p>
               )}
+
             </div>
 
             {/* Signup Button */}
@@ -208,7 +231,13 @@ function Signup() {
           {/* Login */}
           <p className="text-center text-sm text-gray-500 mt-6">
             Already have an account?
-            <Link to="/login" className="text-gray-900 font-semibold ml-1 hover:underline" > Login </Link>
+
+            <Link
+              to="/login"
+              className="text-gray-900 font-semibold ml-1 hover:underline"
+            >
+              Login
+            </Link>
           </p>
 
         </div>
@@ -218,8 +247,10 @@ function Signup() {
         </p>
 
       </div>
+
     </div>
   );
 }
 
 export default Signup;
+
