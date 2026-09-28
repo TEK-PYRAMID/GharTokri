@@ -164,14 +164,29 @@ function Login() {
                       : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
                   }`}
               />
+{/* 
+             
+            </div> */}
+          {formik.touched.password && formik.errors.password && (
+  <p className="text-red-500 text-sm mt-1">
+    {formik.errors.password}
+  </p>
+)}
 
-              {formik.touched.password && formik.errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {formik.errors.password}
-                </p>
-              )}
+</div>
 
-            </div>
+{/* Forgot Password */}
+<div className="text-right mb-6">
+  <Link
+    to="/forgot-password"
+    className="text-sm text-gray-700 font-semibold hover:text-[#f8c600] hover:underline"
+  >
+    Forgot Password?
+  </Link>
+</div>
+
+
+
 
             {/* Login Button */}
             <button
