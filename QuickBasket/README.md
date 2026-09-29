@@ -1,5 +1,7 @@
 # Grocery App
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/56335178-7221-4468-9bdc-559dff4a75a4/deploy-status)](https://app.netlify.com/projects/ghartokr/deploys)
+
 Quick-commerce grocery web app — 9-developer team project (React + Vite + Tailwind).
 
 ## Folder Structure
