@@ -507,7 +507,7 @@ const ProductDetails = () => {
                   : "text-gray-500 hover:text-gray-800"
               }`}
             >
-              Why QuickBasket?
+              Why GharTokri?
             </button>
           </div>
 
@@ -578,7 +578,7 @@ const ProductDetails = () => {
             </div>
           )}
 
-          {/* Tab 3: Why QuickBasket? */}
+          {/* Tab 3: Why GharTokri? */}
           {activeTab === "whyUs" && (
             <div className="pt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
@@ -614,7 +614,7 @@ const ProductDetails = () => {
                 Customer Ratings & Reviews
               </h3>
               <p className="mt-0.5 text-xs text-gray-500">
-                Verified reviews from real QuickBasket shoppers
+                Verified reviews from real GharTokri shoppers
               </p>
             </div>
 

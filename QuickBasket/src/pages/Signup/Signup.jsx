@@ -1,8 +1,8 @@
-
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../components/common/Logo";
 
 function Signup() {
   const navigate = useNavigate();
@@ -85,25 +85,7 @@ function Signup() {
 
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <div className="flex items-center gap-2">
-
-            <div className="w-12 h-12 rounded-xl bg-[#f8c600] flex items-center justify-center shadow-md">
-              <span className="text-2xl font-black text-[#111111]">
-                QB
-              </span>
-            </div>
-
-            <div>
-              <h1 className="text-3xl font-extrabold text-[#111111]">
-                QuickBasket
-              </h1>
-
-              <p className="text-sm text-gray-500">
-                Groceries delivered quickly
-              </p>
-            </div>
-
-          </div>
+          <Logo size="lg" showTagline={true} />
         </div>
 
         {/* Card */}

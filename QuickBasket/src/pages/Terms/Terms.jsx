@@ -4,7 +4,7 @@ const Terms = () => {
       <header className="bg-[#20251f] text-white">
         <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <p className="text-sm font-bold uppercase tracking-widest text-[#f8c600]">
-            QuickBasket
+            GharTokri
           </p>
           <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">
             Terms &amp; Conditions
@@ -18,8 +18,8 @@ const Terms = () => {
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
         <div className="max-w-3xl">
           <p className="text-lg leading-8 text-gray-700">
-            These terms describe the use of the QuickBasket application. By
-            accessing the app, you agree to use it responsibly. QuickBasket is
+            These terms describe the use of the GharTokri application. By
+            accessing the app, you agree to use it responsibly. GharTokri is
             currently a development and demonstration project, not a live
             grocery delivery service.
           </p>
