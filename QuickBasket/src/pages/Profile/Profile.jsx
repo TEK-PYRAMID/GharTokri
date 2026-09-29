@@ -55,25 +55,68 @@ const Profile = () => {
               </h1>
               <p className="mt-1 text-sm text-gray-500">GharTokri member</p>
             </div>
+
+            <button
+              type="button"
+              className="rounded-full border border-yellow-300 bg-yellow-50 px-3 py-1.5 text-xs font-semibold text-gray-800 transition hover:bg-yellow-100"
+            >
+              Edit
+            </button>
           </div>
 
-          <div className="mt-8 border-t border-gray-200 pt-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-              Email address
+          <div className="mt-5">
+            <h2 className="truncate text-3xl font-extrabold tracking-tight text-gray-900">
+              {user.name || "Name not provided"}
+            </h2>
+            <p className="mt-1 text-sm font-medium text-gray-500">
+              QuickBasket member
             </p>
-            <p className="mt-2 break-words text-gray-900">{user.email}</p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              setUser(null);
-              navigate("/");
-            }}
-            className="mt-6 rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 transition hover:bg-gray-50"
-          >
-            Log out
-          </button>
+          <div className="mt-6 space-y-4 rounded-2xl bg-gray-50 p-4">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                Email address
+              </p>
+              <p className="mt-2 break-words text-base font-medium text-gray-900">
+                {user.email || "No email provided"}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="rounded-xl bg-white p-3 shadow-sm ring-1 ring-gray-100">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                  Orders
+                </p>
+                <p className="mt-2 text-xl font-bold text-gray-900">24</p>
+              </div>
+              <div className="rounded-xl bg-white p-3 shadow-sm ring-1 ring-gray-100">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                  Joined
+                </p>
+                <p className="mt-2 text-xl font-bold text-gray-900">2024</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setUser(null);
+                navigate("/");
+              }}
+              className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            >
+              Log out
+            </button>
+            <button
+              type="button"
+              className="flex-1 rounded-xl bg-[#f8c600] px-4 py-3 text-sm font-bold text-gray-900 transition hover:bg-[#e9b700]"
+            >
+              View orders
+            </button>
+          </div>
         </div>
       </section>
     </main>
