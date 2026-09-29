@@ -4,7 +4,8 @@
       "id": "1",
       "name": "Mubina",
       "email": "mubina@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "phone": null
     },
     {
       "id": "2",
@@ -47,6 +48,14 @@
       "email": "aishwaryahonawad7@gmail.com",
       "password": "098765",
       "id": "Gqomyl5Et04"
+    },
+    {
+      "name": "sundaravadhani sekar",
+      "email": "sundaravadhanisekar@gmail.com",
+      "password": "123456",
+      "id": "pY3WDJxxiUY",
+      "phone": "91 9567431407",
+      "profileImage": "https://image.tmdb.org/t/p/w500/qAPdGKUIUEzLibdgVCey7oKvvME.jpg"
     }
   ],
   "categories": [
