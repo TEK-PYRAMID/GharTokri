@@ -53,6 +53,7 @@ const AppRoutes = () => (
     <Route path="/checkout" element={<Checkout />} />
     <Route path="/payment" element={<Payment />} />
     <Route path="/order-confirmation" element={<OrderConfirmation />} />
+    <Route path="/order-success" element={<OrderConfirmation />} />
     <Route path="/orders" element={<MyOrders />} />
     <Route path="/orders/:id" element={<OrderDetails />} />
     <Route path="/orders/:id/tracking" element={<OrderTracking />} />
