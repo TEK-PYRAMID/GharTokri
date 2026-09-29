@@ -117,7 +117,7 @@ const TESTIMONIALS = [
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80",
     comment:
-      "QuickBasket has completely transformed our weekday routine. Crisp spinach, strawberries, and farm milk arrived in 11 minutes flat!",
+      "GharTokri has completely transformed our weekday routine. Crisp spinach, strawberries, and farm milk arrived in 11 minutes flat!",
     verified: "Verified Buyer",
   },
   {
@@ -744,7 +744,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* 10. WHY CUSTOMERS TRUST QUICKBASKET */}
+        {/* 10. WHY CUSTOMERS TRUST GHARTOKRI */}
         <section className="rounded-3xl border border-gray-100 bg-white p-6 shadow-xs sm:p-8">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-green-700">
@@ -752,7 +752,7 @@ const Home = () => {
               <span>Loved By Foodies</span>
             </span>
             <h2 className="mt-1 text-2xl font-extrabold text-gray-900 sm:text-3xl">
-              Why 100,000+ Families Choose QuickBasket
+              Why 100,000+ Families Choose GharTokri
             </h2>
             <p className="mt-2 text-xs text-gray-500 sm:text-sm">
               We are obsessed with bringing you the freshest greens, speediest delivery, and happiest customer experience every single day.
