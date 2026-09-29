@@ -9,7 +9,7 @@ const Contact = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent(`QuickBasket message from ${form.name}`);
+    const subject = encodeURIComponent(`GharTokri message from ${form.name}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
     );
@@ -22,7 +22,7 @@ const Contact = () => {
         <div className="flex flex-col justify-between gap-8 rounded-xl bg-[#20251f] p-8 text-white sm:p-10">
           <div>
             <p className="text-sm font-bold uppercase tracking-widest text-[#f8c600]">
-              Contact QuickBasket
+              Contact GharTokri
             </p>
             <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">
               How can we help?

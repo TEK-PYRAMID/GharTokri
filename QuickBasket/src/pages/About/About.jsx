@@ -7,7 +7,7 @@ const About = () => {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:py-16 lg:px-8 lg:py-20">
           <div className="max-w-xl">
             <p className="text-sm font-bold uppercase tracking-widest text-yellow-700">
-              About QuickBasket
+              About GharTokri
             </p>
             <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">
               Good food, made easier.
@@ -53,7 +53,7 @@ const About = () => {
           </div>
           <p className="text-lg leading-8 text-gray-600">
             Shopping for the things you need should fit naturally into your day.
-            QuickBasket brings your grocery list together in a straightforward
+            GharTokri brings your grocery list together in a straightforward
             experience, so you can spend less time sorting out the shop and more
             time on what matters at home.
           </p>

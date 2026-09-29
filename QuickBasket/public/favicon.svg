@@ -1,4 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="2" y="2" width="60" height="60" rx="13" fill="#ffc400" />
-  <text x="32" y="43" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="middle">QB</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Rounded Background Tile -->
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Defs for Gradients -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="basketGrad" x1="16" y1="28" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#B45309" />
+      <stop offset="100%" stop-color="#78350F" />
+    </linearGradient>
+  </defs>
+
+  <!-- Fresh Fruits peeking out -->
+  <!-- Red Apple -->
+  <circle cx="28" cy="27" r="7.5" fill="#EF4444" />
+  <circle cx="26" cy="24.5" r="2" fill="#FCA5A5" opacity="0.8" />
+  
+  <!-- Orange -->
+  <circle cx="38" cy="28.5" r="7" fill="#F97316" />
+  <circle cx="36.5" cy="26" r="1.8" fill="#FED7AA" opacity="0.8" />
+
+  <!-- Green Sprout / Leaf -->
+  <path d="M28 21C28 21 31 13 38 14C38 14 38 19 31 21Z" fill="#22C55E" />
+  <path d="M22 24C22 24 18 17 24 15C24 15 26 19 24 24Z" fill="#16A34A" />
+
+  <!-- Ghar (Home Roof) Silhouette Handle -->
+  <path d="M16 29L32 14L48 29" stroke="#451A03" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Chimney -->
+  <path d="M40 20.5V16H43.5V23.5" stroke="#451A03" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Tokri (Basket Base) -->
+  <path d="M17 30H47L44.5 49C44.2 51.5 42 53.5 39.5 53.5H24.5C22 53.5 19.8 51.5 19.5 49L17 30Z" fill="url(#basketGrad)" stroke="#451A03" stroke-width="3" stroke-linejoin="round" />
+
+  <!-- Woven Lines -->
+  <path d="M18.5 36H45.5" stroke="#FDE68A" stroke-width="2.2" stroke-linecap="round" opacity="0.9" />
+  <path d="M20 42H44" stroke="#FDE68A" stroke-width="2.2" stroke-linecap="round" opacity="0.9" />
+  <path d="M22 48H42" stroke="#FDE68A" stroke-width="2.2" stroke-linecap="round" opacity="0.9" />
+
+  <!-- Magic Sparkle -->
+  <path d="M50 14L51 17L54 18L51 19L50 22L49 19L46 18L49 17L50 14Z" fill="#FEF08A" />
 </svg>
