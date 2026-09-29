@@ -31,7 +31,8 @@ function Login() {
         );
         const users = await response.json();
 
-        if (!users || users.length === 0) {
+        // Check if email exists
+        if (response.data.length === 0) {
           alert("Email is not registered");
           return;
         }
@@ -44,14 +45,7 @@ function Login() {
           return;
         }
 
-        setUser({
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          profileImage:
-            user.profileImage || user.image || user.avatar || user.photoURL || "",
-        });
-
+        // Login successful
         alert("Login successful!");
 
         // Clear email and password fields
