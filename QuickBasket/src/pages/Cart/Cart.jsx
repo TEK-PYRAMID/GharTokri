@@ -228,13 +228,12 @@ const Cart = () => {
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => alert("Proceeding to checkout!")}
-              className="mt-6 w-full rounded-lg bg-green-600 py-3 font-semibold text-white transition hover:bg-green-700"
+            <Link
+              to="/checkout"
+              className="mt-6 block w-full rounded-lg bg-green-600 py-3 text-center font-semibold text-white transition hover:bg-green-700"
             >
               Proceed to Checkout
-            </button>
+            </Link>
 
             <p className="mt-3 text-center text-xs text-gray-500">
               Delivery charges are free on this order.

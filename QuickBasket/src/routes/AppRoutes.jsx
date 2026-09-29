@@ -4,11 +4,16 @@
 import { Routes, Route } from 'react-router-dom';
 import React from "react";
 import Home from '../pages/Home';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import Privacy from '../pages/Privacy';
+import Terms from '../pages/Terms';
 import Categories from '../pages/Categories';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import OTPVerification from '../pages/OTPVerification';
 import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword/ResetPassword';
 import ProductListing from '../pages/ProductListing';
 import ProductDetails from '../pages/ProductDetails';
 import SearchResults from '../pages/SearchResults';
@@ -28,12 +33,17 @@ import NotFound from '../pages/NotFound';
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/contact" element={<Contact />} />
+    <Route path="/privacy" element={<Privacy />} />
+    <Route path="/terms" element={<Terms />} />
     <Route path="/categories" element={<Categories />} />
     <Route path="/categories/:category" element={<Categories />} />
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
     <Route path="/otp-verification" element={<OTPVerification />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
+    <Route path="/reset-password" element={<ResetPassword />} />
     <Route path="/products" element={<ProductListing />} />
     <Route path="/products/:id" element={<ProductDetails />} />
     <Route path="/search" element={<SearchResults />} />
@@ -49,6 +59,8 @@ const AppRoutes = () => (
     <Route path="/profile" element={<Profile />} />
     <Route path="/account-settings" element={<AccountSettings />} />
     <Route path="*" element={<NotFound />} />
+
+    
   </Routes>
 );
 

@@ -1,12 +1,12 @@
-
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -26,27 +26,48 @@ function Login() {
 
     onSubmit: async (values) => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/users?email=${values.email}`
+        const response = await fetch(
+          `http://localhost:3000/users?email=${encodeURIComponent(values.email)}`
         );
+        const users = await response.json();
 
+<<<<<<< HEAD
+        // Check if email exists
         if (response.data.length === 0) {
+=======
+        if (!users || users.length === 0) {
+>>>>>>> f45f888741ea591fde817d4d7a21d2f0ecf1e4c3
           alert("Email is not registered");
           return;
         }
 
-        const user = response.data[0];
+        const user = users[0];
 
+        // Check password
         if (user.password !== values.password) {
           alert("Incorrect password");
           return;
         }
 
+<<<<<<< HEAD
+        // Login successful
+=======
+        setUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          profileImage:
+            user.profileImage || user.image || user.avatar || user.photoURL || "",
+        });
+
+>>>>>>> f45f888741ea591fde817d4d7a21d2f0ecf1e4c3
         alert("Login successful!");
 
-        // Navigate to home page after login
-        navigate("/");
+        // Clear email and password fields
+        formik.resetForm();
 
+        // Navigate to home page
+        navigate("/");
       } catch (error) {
         console.log(error);
         alert("Login failed");
@@ -56,7 +77,6 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-[#f7f7f7] flex items-center justify-center px-4">
-
       <div className="w-full max-w-md">
 
         {/* Logo */}
@@ -82,7 +102,7 @@ function Login() {
           </div>
         </div>
 
-        {/* Card */}
+        {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-lg p-7">
 
           <h2 className="text-2xl font-bold text-gray-900 text-center">
@@ -93,7 +113,10 @@ function Login() {
             Login to continue shopping
           </p>
 
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={formik.handleSubmit}
+            autoComplete="off"
+          >
 
             {/* Email */}
             <div className="mb-4">
@@ -110,15 +133,15 @@ function Login() {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
+                autoComplete="off"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.email && formik.errors.email
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
               {formik.touched.email && formik.errors.email && (
@@ -144,24 +167,37 @@ function Login() {
                 type="password"
                 name="password"
                 placeholder="Enter your password"
+                autoComplete="new-password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`w-full px-4 py-3 rounded-lg border outline-none transition
-                  ${
-                    formik.touched.password && formik.errors.password
-                      ? "border-red-500 focus:ring-2 focus:ring-red-200"
-                      : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
-                  }`}
+                className={`w-full px-4 py-3 rounded-lg border outline-none transition ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                    : "border-gray-300 focus:border-[#f8c600] focus:ring-2 focus:ring-yellow-100"
+                }`}
               />
 
-              {formik.touched.password && formik.errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {formik.errors.password}
-                </p>
-              )}
+          {formik.touched.password && formik.errors.password && (
+  <p className="text-red-500 text-sm mt-1">
+    {formik.errors.password}
+  </p>
+)}
 
-            </div>
+</div>
+
+{/* Forgot Password */}
+<div className="text-right mb-6">
+  <Link
+    to="/forgot-password"
+    className="text-sm text-gray-700 font-semibold hover:text-[#f8c600] hover:underline"
+  >
+    Forgot Password?
+  </Link>
+</div>
+
+
+
 
             {/* Login Button */}
             <button
@@ -197,5 +233,3 @@ function Login() {
 }
 
 export default Login;
-
-
