@@ -1,7 +1,7 @@
 // Owner:Sayeed (maintains centralized Axios/Fetch config)
 // Validated by: Prashant
 
-const BASE_URL = import.meta.env?.VITE_API_BASE_URL || 'http://localhost:3000';
+const BASE_URL = import.meta.env?.VITE_API_BASE_URL || 'https://quickbasketstore.netlify.app';
 
 const apiClient = {
   get: async (endpoint, options = {}) => {

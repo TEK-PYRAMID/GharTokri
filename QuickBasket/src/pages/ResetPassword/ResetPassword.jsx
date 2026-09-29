@@ -43,7 +43,7 @@ function ResetPassword() {
     setLoading(true);
     try {
       const lookupResponse = await fetch(
-        `http://localhost:3000/users?email=${encodeURIComponent(email)}`
+        `https://quickbasketstore.netlify.app/users?email=${encodeURIComponent(email)}`
       );
       if (!lookupResponse.ok) {
         throw new Error("Could not find your account. Please try again.");
@@ -56,7 +56,7 @@ function ResetPassword() {
       }
 
       const updateResponse = await fetch(
-        `http://localhost:3000/users/${encodeURIComponent(user.id)}`,
+        `https://quickbasketstore.netlify.app/users/${encodeURIComponent(user.id)}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

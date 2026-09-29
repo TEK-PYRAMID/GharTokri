@@ -32,7 +32,7 @@ function Signup() {
       try {
         // Check if email already exists
         const response = await fetch(
-          `http://localhost:3000/users?email=${encodeURIComponent(
+          `https://quickbasketstore.netlify.app/users?email=${encodeURIComponent(
             values.email
           )}`
         );
@@ -46,7 +46,7 @@ function Signup() {
 
         // Create user
         const createResponse = await fetch(
-          "http://localhost:3000/users",
+          "https://quickbasketstore.netlify.app/users",
           {
             method: "POST",
             headers: {

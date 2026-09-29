@@ -41,7 +41,7 @@ function Login() {
     console.log("Email:", email);
     console.log("Password:", password);
 
-    const url = `http://localhost:3000/users?email=${encodeURIComponent(
+    const url = `https://quickbasketstore.netlify.app/users?email=${encodeURIComponent(
       email
     )}`;
 

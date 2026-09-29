@@ -26,7 +26,7 @@ function ForgotPassword() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/users?email=${encodeURIComponent(normalizedEmail)}`
+        `https://quickbasketstore.netlify.app/users?email=${encodeURIComponent(normalizedEmail)}`
       );
 
       if (!response.ok) {
