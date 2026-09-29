@@ -13,6 +13,7 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import OTPVerification from '../pages/OTPVerification';
 import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword/ResetPassword';
 import ProductListing from '../pages/ProductListing';
 import ProductDetails from '../pages/ProductDetails';
 import SearchResults from '../pages/SearchResults';
@@ -42,6 +43,7 @@ const AppRoutes = () => (
     <Route path="/signup" element={<Signup />} />
     <Route path="/otp-verification" element={<OTPVerification />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
+    <Route path="/reset-password" element={<ResetPassword />} />
     <Route path="/products" element={<ProductListing />} />
     <Route path="/products/:id" element={<ProductDetails />} />
     <Route path="/search" element={<SearchResults />} />
@@ -51,12 +53,15 @@ const AppRoutes = () => (
     <Route path="/checkout" element={<Checkout />} />
     <Route path="/payment" element={<Payment />} />
     <Route path="/order-confirmation" element={<OrderConfirmation />} />
+    <Route path="/order-success" element={<OrderConfirmation />} />
     <Route path="/orders" element={<MyOrders />} />
     <Route path="/orders/:id" element={<OrderDetails />} />
     <Route path="/orders/:id/tracking" element={<OrderTracking />} />
     <Route path="/profile" element={<Profile />} />
     <Route path="/account-settings" element={<AccountSettings />} />
     <Route path="*" element={<NotFound />} />
+
+    
   </Routes>
 );
 
