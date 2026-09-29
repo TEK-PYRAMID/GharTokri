@@ -31,12 +31,8 @@ function Login() {
         );
         const users = await response.json();
 
-<<<<<<< HEAD
         // Check if email exists
         if (response.data.length === 0) {
-=======
-        if (!users || users.length === 0) {
->>>>>>> f45f888741ea591fde817d4d7a21d2f0ecf1e4c3
           alert("Email is not registered");
           return;
         }
@@ -49,18 +45,7 @@ function Login() {
           return;
         }
 
-<<<<<<< HEAD
         // Login successful
-=======
-        setUser({
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          profileImage:
-            user.profileImage || user.image || user.avatar || user.photoURL || "",
-        });
-
->>>>>>> f45f888741ea591fde817d4d7a21d2f0ecf1e4c3
         alert("Login successful!");
 
         // Clear email and password fields
