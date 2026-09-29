@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../components/common/Logo";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -57,15 +58,7 @@ function ForgotPassword() {
     <main className="min-h-screen bg-[#f7f7f7] flex items-center justify-center px-4 py-10">
       <section className="w-full max-w-md">
         <div className="flex justify-center mb-6">
-          <Link to="/" className="flex items-center gap-3" aria-label="QuickBasket home">
-            <span className="w-12 h-12 rounded-xl bg-[#f8c600] flex items-center justify-center shadow-md text-xl font-black text-[#111111]">
-              QB
-            </span>
-            <span>
-              <span className="block text-2xl font-extrabold text-[#111111]">QuickBasket</span>
-              <span className="block text-sm text-gray-500">Groceries delivered quickly</span>
-            </span>
-          </Link>
+          <Logo size="lg" showTagline={true} />
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-7 sm:p-8">

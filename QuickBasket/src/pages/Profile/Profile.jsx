@@ -33,37 +33,27 @@ const Profile = () => {
     .join("");
 
   return (
-    <main className="min-h-[60vh] bg-[radial-gradient(circle_at_top,#fff7d6_0%,#f7f8fa_48%,#f3f4f6_100%)] px-4 py-12">
-      <section className="mx-auto max-w-md overflow-hidden rounded-[28px] border border-yellow-200 bg-white shadow-[0_24px_60px_rgba(15,23,42,0.12)]">
-        <div className="relative bg-gradient-to-r from-[#f8c600] via-[#f6d64b] to-[#f0b80d] px-6 pb-16 pt-8">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-gray-900/70">
-                Account
-              </p>
-              <h1 className="mt-2 text-2xl font-bold text-gray-900">Your profile</h1>
-            </div>
-            <span className="rounded-full bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-800 shadow-sm">
-              Active
-            </span>
-          </div>
-        </div>
-
-        <div className="relative px-6 pb-6">
-          <div className="-mt-12 flex items-end justify-between gap-4">
-            <div className="relative">
-              {profileImage ? (
-                <img
-                  src={profileImage}
-                  alt={user.name ? `${user.name}'s profile` : "Profile"}
-                  className="h-20 w-20 rounded-full border-4 border-white object-cover shadow-lg shadow-yellow-200/60"
-                />
-              ) : (
-                <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-white bg-[#fff4bf] text-2xl font-bold text-gray-900 shadow-lg shadow-yellow-200/60">
-                  {initials || "👤"}
-                </div>
-              )}
-              <span className="absolute bottom-1 right-1 h-4 w-4 rounded-full border-2 border-white bg-emerald-500 shadow-sm" />
+    <main className="min-h-[60vh] bg-gray-50 px-4 py-12">
+      <section className="mx-auto max-w-lg overflow-hidden rounded-xl bg-white shadow-md">
+        <div className="h-2 bg-[#f8c600]" />
+        <div className="p-8">
+          <div className="flex items-center gap-5">
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt={user.name ? `${user.name}'s profile` : "Profile"}
+                className="h-16 w-16 shrink-0 rounded-full object-cover"
+              />
+            ) : (
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#fff4bf] text-xl font-bold text-gray-900">
+                {initials || "👤"}
+              </div>
+            )}
+            <div className="min-w-0">
+              <h1 className="truncate text-2xl font-bold text-gray-900">
+                {user.name || "Name not provided"}
+              </h1>
+              <p className="mt-1 text-sm text-gray-500">GharTokri member</p>
             </div>
 
             <button

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -32,19 +33,7 @@ const Navbar = () => {
       <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-3 sm:px-6 lg:px-8">
 
         {/* Logo */}
-        <Link
-          to="/"
-          onClick={closeMenu}
-          className="flex shrink-0 items-center gap-2"
-        >
-          <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-400 text-lg font-bold text-gray-900">
-            QB
-          </span>
-
-          <span className="text-2xl font-bold text-gray-900">
-            Quick<span className="text-yellow-500">Basket</span>
-          </span>
-        </Link>
+        <Logo size="md" onClick={closeMenu} />
 
         {/* Desktop Search */}
         <form

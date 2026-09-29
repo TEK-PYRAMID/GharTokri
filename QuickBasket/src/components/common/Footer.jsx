@@ -1,24 +1,13 @@
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
 
 const Footer = () => {
   return (
     <footer className="bg-white text-gray-700">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
 
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-400 font-bold text-gray-900">
-              QB
-            </span>
-
-            <h3 className="text-xl font-bold text-gray-900">
-              Quick<span className="text-yellow-500">Basket</span>
-            </h3>
-          </div>
-
-          <p className="mt-4 max-w-sm text-sm leading-6 text-gray-500">
-            Fresh groceries and everyday essentials delivered quickly to your doorstep.
-          </p>
+        <div className="flex flex-col gap-2">
+          <Logo size="md" showTagline={true} />
         </div>
 
         <div>
@@ -73,7 +62,7 @@ const Footer = () => {
 
       <div className="border-t border-gray-200">
         <p className="px-4 py-4 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} QuickBasket. All rights reserved.
+          © {new Date().getFullYear()} GharTokri. All rights reserved.
         </p>
       </div>
     </footer>
