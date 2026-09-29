@@ -112,7 +112,7 @@ const Navbar = () => {
             to="/login"
             className="flex items-center gap-2 rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-gray-900 transition hover:bg-yellow-400"
           >
-            👤 Login
+            Login
           </Link>
         </div>
 
